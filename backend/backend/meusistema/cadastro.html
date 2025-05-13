@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cadastro.css">
+    <title>ActiveLife</title>
+</head>
+
+<body>
+    <form onsubmit="logar(event)">
+        <h3>Seja bem-vindo(a) a nossa academia </h3>
+        <h5>Por favor, preencha nosso cadastro</h5>
+        <input type="email" placeholder="E-mail" id="email" required>
+        <input type="password" placeholder="Senha" id="senha" required>
+        <input type="password" placeholder="Confirme sua senha" id="senhaConfirm" required>
+        <input type="submit" value="Cadastrar" onclick="logar(); window.location.href='home.html'; return false;">
+    </form>
+
+    <script type="module">
+        // Importar as funções necessárias do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAmZAGDjXEyp861eluwiw_XJS_FI6ej-Bk",
+            authDomain: "activelife-949d6.firebaseapp.com",
+            databaseURL: "https://activelife-949d6-default-rtdb.firebaseio.com",
+            projectId: "activelife-949d6",
+            storageBucket: "activelife-949d6.firebasestorage.app",
+            messagingSenderId: "873276687155",
+            appId: "1:873276687155:web:956297062feab203aa3446",
+            measurementId: "G-167EQDEVMP"
+        };
+
+        // Inicializar o Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        function logar(event) {
+            // Evitar o envio do formulário
+            event.preventDefault();
+
+            // Obtendo os valores dos campos
+            var email = document.getElementById('email').value;
+            var senha = document.getElementById('senha').value;
+            var senhaConfirm = document.getElementById('senhaConfirm').value;
+
+            // Verificar se algum campo está vazio
+            if (email === "" || senha === "" || senhaConfirm === "") {
+                alert("Alguns campos ainda estão vazios, por favor, preencha todos.");
+                return;
+            }
+
+            // Validar e-mail
+            if (!email.includes("@") || !email.includes(".")) {
+                alert("Você deve inserir um e-mail válido.");
+                return;
+            }
+
+            // Validar se as senhas coincidem
+            if (senha !== senhaConfirm) {
+                alert("As senhas não coincidem. Tente novamente.");
+                return;
+            }
+
+            // Sucesso no cadastro
+            alert('Cadastro realizado com sucesso!');
+            location.href = "home.html"; // Redireciona para a página inicial
+        }
+    </script>
+</body>
+
+</html>
